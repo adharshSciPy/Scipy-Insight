@@ -74,6 +74,12 @@ function DrawerAppBar(props) {
       myAction: () => {
         navigate('/student/profile')
       }
+    },
+    {
+      title: 'Logout',
+      myAction: () => {
+        // navigate('/student/profile')
+      }
     }
   ]
 
