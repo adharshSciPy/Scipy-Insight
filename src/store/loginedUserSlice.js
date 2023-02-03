@@ -11,8 +11,7 @@ export const LoginedUserSlice = createSlice({
   initialState,
   reducers: {
      loggeduser : (state,action ) => {
-         state.id = action.payload
-         console.log(state.id);        
+         state.id = action.payload      
      },
      isConnected : (state) => {
           state.isConnected = true

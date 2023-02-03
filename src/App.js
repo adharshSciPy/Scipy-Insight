@@ -36,19 +36,14 @@ function App() {
   const checkUserToken = () => {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("user-token"));
-      console.log(user);
-
       if (user) {
-
         const  data = {token : user}
-        const verifyUser = async () => {
-         
+        const verifyUser = async () => {         
           axios
             .post("http://localhost:5000/user/auth", data)
             .then((response) => {
               const X = response.data;
               // Save token to localStorage
-              console.log(X._id);
               dispatch(loggeduser(X._id))
               // setIsconnected(true);
               dispatch(isConnected())
