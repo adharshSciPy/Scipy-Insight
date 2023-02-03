@@ -55,12 +55,11 @@ export default function SignIn() {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         console.log(response);
-        dispatch(setLoading())
         navigate("/student/home");
-        setTimeout(() => {
-          dispatch(unSetLoading())
-
-        }, 3000);
+        // setTimeout(() => {
+        //   window.location.reload(false);
+         
+        // }, 1000);
       })
       .catch((err) => setErrors(err.response.data));
 

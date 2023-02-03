@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import SignIn from './scenes/main/SignIn'
 import SignUp from './scenes/main/SignUp'
 import Dashboard from './scenes/admin/Dashboard'
@@ -23,8 +23,62 @@ import './App.css'
 import { setLoading } from './store/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './scenes/main/Loader';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux'
+
+import { loggeduser, isConnected,isNotConnected } from './store/loginedUserSlice';
+
+import ProtectedRoute from './component/ProtectedRoute';
+import ForceRedirect from './component/ForceRedirect';
 
 function App() {
+  // const [isConnected, setIsconnected] = useState(false);
+  const dispatch = useDispatch()
+  const active = useSelector((state) => state.loginedUser.isConnected)
+
+  const checkUserToken = () => {
+    if (typeof window !== "undefined") {
+      const user = JSON.parse(localStorage.getItem("user-token"));
+      console.log(user);
+
+      if (user) {
+
+        const  data = {token : user}
+        const verifyUser = async () => {
+         
+          axios
+            .post("http://localhost:5000/user/auth", data)
+            .then((response) => {
+              const X = response.data;
+              // Save token to localStorage
+              console.log(X._id);
+              dispatch(loggeduser(X._id))
+              // setIsconnected(true);
+              dispatch(isConnected())
+            })
+            .catch((err) => {
+              console.log(err.response.data)
+              localStorage.clear();
+            });
+        }
+        verifyUser();            
+      } else {
+        // setIsconnected(false);
+        dispatch(isNotConnected())
+      }
+    }
+  };
+  useEffect(() => {
+    checkUserToken();
+  }, [isConnected]);
+
+  const Logout = () => {
+    if (localStorage.getItem("user-token")) {
+      localStorage.clear();
+      // s
+    }
+  };
+
 
   const loading = useSelector((state) => state.loader.loading)
 
@@ -35,6 +89,10 @@ function App() {
       <BrowserRouter>
         {
           loading ? <Loader /> :
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="login" element={<ForceRedirect user={active}><SignIn /></ForceRedirect>} />
+          <Route path="register" element={<SignUp />} />
 
             <Routes>
               <Route path="/" element={<LandingPage />} />
@@ -64,6 +122,13 @@ function App() {
                 <Route path="profile" element={<StudentProfile />} />
                 <Route path="advancedClass" element={<AdvancedClass />} />
               </Route>
+          {/* student */}
+          <Route path="student" element={<StudentNav />}>
+            <Route path="home" element={ <ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
+            <Route path="class" element={<ProtectedRoute user={active}> <StudentClass /></ProtectedRoute>} />
+            <Route path="profile" element={<ProtectedRoute user={active}> <StudentProfile /></ProtectedRoute>} />
+            <Route path="advancedClass" element={<ProtectedRoute user={active}> <AdvancedClass /></ProtectedRoute>} />
+          </Route>
 
 
               {/* teacher */}
