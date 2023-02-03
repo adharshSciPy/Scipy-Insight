@@ -14,10 +14,10 @@ function LandingPage() {
             <NavBar />
             {/* hero section */}
             <Container>
-                <Box sx={{ minHeight: '90vh' }}>
+                <Box sx={{ minHeight: '100vh' }}>
                     <Grid container sx={{ height: '100%', p: 2 }}>
                         <Grid item xs={12} md={7}>
-                            <Box sx={{  minHeight: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'column' }}>
+                            <Box sx={{ minHeight: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'column' }}>
                                 <Typography variant="h3" color="primary" sx={{ fontWeight: 600 }}>Learn Programming</Typography>
                                 <Box sx={{ maxWidth: '30rem' }}>
                                     <Typography variant="subtitle1" color="initial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente fugit reiciendis quasi illo omnis recusandae fugiat aliquam id culpa minima!</Typography>
@@ -25,7 +25,7 @@ function LandingPage() {
 
                                 <Box sx={{ mt: 3 }}>
                                     <Button variant="contained" color='primary' size="large">Get Started</Button>
-                                </Box>
+                                </Box>  
                             </Box>
                         </Grid>
 

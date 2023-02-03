@@ -40,7 +40,7 @@ function DrawerAppBar(props) {
   const navItems = [
     {
       title: 'Home',
-      myAction : () => {
+      myAction: () => {
         navigate('/student/home')
       }
     },
@@ -85,13 +85,13 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-       <img src={Logo} alt="logo" style={{height: '4rem', width: '6rem'}}/>
+      <img src={Logo} alt="logo" style={{ height: '4rem', width: '6rem' }} />
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }} onClick={item.myAction}>
-              <ListItemText primary={item.title} sx={{color: '#7f18c8'}} />
+              <ListItemText primary={item.title} sx={{ color: '#7f18c8' }} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -106,13 +106,13 @@ function DrawerAppBar(props) {
   return (
     <Box sx={{ display: 'flex', mb: 2 }}>
       <CssBaseline />
-      <AppBar component="nav" position='fixed' sx={{backgroundColor: '#fff', mb: 2, boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px' }}>
+      <AppBar component="nav" position='fixed' sx={{ backgroundColor: '#fff', mb: 2, boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px' }}>
         <Toolbar>
           <IconButton
             color="primary"
             aria-label="open drawer"
             edge="end"
-            onClick={handleDrawerToggle}  
+            onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
@@ -124,12 +124,12 @@ function DrawerAppBar(props) {
           >
             Insight
           </Typography> */}
-          <Box   sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}>
-          <img src={Logo} alt="logo" style={{height: '4rem', width: '6rem'}}/>
+          <Box sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}>
+            <img src={Logo} alt="logo" style={{ height: '4rem', width: '6rem' }} />
           </Box>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{color: '#7f18c8'}} onClick={item.myAction} size="small">
+              <Button key={item} sx={{ color: '#7f18c8' }} onClick={item.myAction} size="small">
                 {item.title}
               </Button>
             ))}
