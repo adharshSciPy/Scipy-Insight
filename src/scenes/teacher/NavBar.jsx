@@ -82,8 +82,8 @@ function DrawerAppBar(props) {
        <img src={Logo} alt="logo" style={{height: '4rem', width: '6rem'}}/>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        {navItems.map((item,val) => (
+          <ListItem key={val} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }} onClick={item.myAction}>
               <ListItemText primary={item.title} sx={{color: '#7f18c8'}} />
             </ListItemButton>
@@ -122,8 +122,8 @@ function DrawerAppBar(props) {
           <img src={Logo} alt="logo" style={{height: '4rem', width: '6rem'}}/>
           </Box>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{color: '#7f18c8'}} onClick={item.myAction} size="small">
+            {navItems.map((item, val) => (
+              <Button key={val} sx={{color: '#7f18c8'}} onClick={item.myAction} size="small">
                 {item.title}
               </Button>
             ))}
