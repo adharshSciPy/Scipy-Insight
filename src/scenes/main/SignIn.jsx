@@ -19,6 +19,7 @@ import { setUser, setRole, setStudent, setPublic, setAdmin } from '../../store/a
 import { MenuItem } from '@mui/material';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setLoading, unSetLoading } from "../../store/loader";
 
 export default function SignIn() {
 
@@ -54,6 +55,12 @@ export default function SignIn() {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         console.log(response);
+        dispatch(setLoading())
+        navigate("/student/home");
+        setTimeout(() => {
+          dispatch(unSetLoading())
+
+        }, 3000);
         window.location.reload(false);
         // navigate(`/${role}/home`);
         // setTimeout(() => {

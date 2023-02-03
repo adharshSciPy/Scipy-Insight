@@ -36,5 +36,3 @@ export const theme = createTheme({
       fontFamily: 'Poppins, sans-serif',
     }
 })
-
-
