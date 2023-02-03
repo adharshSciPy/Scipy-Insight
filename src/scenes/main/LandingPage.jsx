@@ -2,12 +2,17 @@ import { Box, Container, Stack } from '@mui/system'
 import React from 'react'
 import NavBar from '../main/Navbar'
 import Typography from '@mui/material/Typography'
-
+import { useNavigate } from 'react-router-dom'
 import { Button, Grid } from '@mui/material'
 
 
 function LandingPage() {
 
+    // navigate
+    const navigate = useNavigate()
+    const getStarted = () => {
+        navigate('/login')
+    }
 
     return (
         <Box sx={{ background: 'linear-gradient(0deg, rgba(22,0,38,1) 6%, rgba(127,24,200,1) 45%, rgba(255,255,255,1) 87%)' }}>
@@ -25,7 +30,7 @@ function LandingPage() {
                                 </Box>
 
                                 <Box sx={{ mt: 3 }}>
-                                    <Button variant="contained" color='primary' size="large">Get Started</Button>
+                                    <Button variant="contained" color='primary' size="large" onClick={getStarted}>Get Started</Button>
                                 </Box>  
                             </Box>
                         </Grid>
@@ -33,7 +38,7 @@ function LandingPage() {
 
                         <Grid item xs={12} display={{ xs: 'block', md: 'none' }}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-                                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_akio2kni.json" background="rgba(0, 0, 0, 0)" speed="1" loop autoplay style={{ width: '40%', height: '40%' }}></lottie-player>
+                                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_akio2kni.json" background="rgba(0, 0, 0, 0)" speed="1" loop autoplay style={{ width: '60%', height: '60%' }}></lottie-player>
                             </div>
                         </Grid>
 
@@ -45,7 +50,7 @@ function LandingPage() {
                                 </Box>
 
                                 <Box sx={{ mt: 3 }}>
-                                    <Button variant="contained" color='white' size="large">Get Started</Button>
+                                    <Button variant="outlined" color='primary' size="large"  onClick={getStarted}>Get Started</Button>
                                 </Box>
                             </Box>
                         </Grid>
@@ -75,7 +80,7 @@ function LandingPage() {
             {/* contact section */}
             <Box sx={{ minHeight: '90vh' }}>
                 <Container>
-                    <Typography variant="h1" color="secondary">Contact Section</Typography>
+                    <Typography variant="h5" color="secondary">Contact Section</Typography>
                 </Container>
             </Box>
         </Box >

@@ -8,13 +8,15 @@ import store from "./store/store";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme";
 import { CssBaseline } from "@mui/material";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <App />
+      {/* <RouterProvider router={router} /> */}
     </Provider>
   </ThemeProvider>
 );
