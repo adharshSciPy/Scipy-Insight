@@ -39,10 +39,8 @@ function App() {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("user-token"));
       if (user) {
-
         const data = { token: user }
-        const verifyUser = async () => {
-
+        const verifyUser = async () => {         
           axios
             .post("http://localhost:5000/user/auth", data)
             .then((response) => {
@@ -66,7 +64,7 @@ function App() {
   };
   useEffect(() => {
     checkUserToken();
-  }, [isConnected]);
+  }, [active]);
 
   const Logout = () => {
     if (localStorage.getItem("user-token")) {
@@ -106,14 +104,7 @@ function App() {
                     <Route path=':teacherId' element={<Teacher />} />
                   </Route>
                 </Route>
-
-                {/* student */}
-                <Route path="student" element={<StudentNav />}>
-                  <Route path="home" element={<StudentHome />} />
-                  <Route path="class" element={<StudentClass />} />
-                  <Route path="profile" element={<StudentProfile />} />
-                  <Route path="advancedClass" element={<AdvancedClass />} />
-                </Route>
+                
                 {/* student */}
                 <Route path="student" element={<StudentNav />}>
                   <Route path="home" element={<ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
