@@ -20,50 +20,59 @@ import AdvancedClass from './scenes/student/AdvancedClass'
 import { Outlet } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
+import { setLoading } from './store/loader';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from './scenes/main/Loader';
 
 function App() {
+
+  const loading = useSelector((state) => state.loader.loading)
 
   return (
     <>
       {/* <LandingPage /> */}
-      <Outlet />
+      {/* <Outlet /> */}
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="login" element={<SignIn />} />
-          <Route path="register" element={<SignUp />} />
+        {
+          loading ? <Loader /> :
 
-          {/* admin */}
-          <Route path="admin" element={<Dashboard />}>
-            <Route path='home' element={<Home />} />
-            <Route path='batches' element={<Batches />} >
-              <Route path=':batchId' element={<Batches />} />
-            </Route>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="login" element={<SignIn />} />
+              <Route path="register" element={<SignUp />} />
 
-            <Route path='students' element={<Students />} >
-              <Route path=':studentId' element={<Student />} />
-            </Route>
+              {/* admin */}
+              <Route path="admin" element={<Dashboard />}>
+                <Route path='home' element={<Home />} />
+                <Route path='batches' element={<Batches />} >
+                  <Route path=':batchId' element={<Batches />} />
+                </Route>
 
-            <Route path='teachers' element={<Teachers />} >
-              <Route path=':teacherId' element={<Teacher />} />
-            </Route>
-          </Route>
+                <Route path='students' element={<Students />} >
+                  <Route path=':studentId' element={<Student />} />
+                </Route>
 
-          {/* student */}
-          <Route path="student" element={<StudentNav />}>
-            <Route path="home" element={<StudentHome />} />
-            <Route path="class" element={<StudentClass />} />
-            <Route path="profile" element={<StudentProfile />} />
-            <Route path="advancedClass" element={<AdvancedClass />} />
-          </Route>
+                <Route path='teachers' element={<Teachers />} >
+                  <Route path=':teacherId' element={<Teacher />} />
+                </Route>
+              </Route>
+
+              {/* student */}
+              <Route path="student" element={<StudentNav />}>
+                <Route path="home" element={<StudentHome />} />
+                <Route path="class" element={<StudentClass />} />
+                <Route path="profile" element={<StudentProfile />} />
+                <Route path="advancedClass" element={<AdvancedClass />} />
+              </Route>
 
 
-          {/* teacher */}
-          <Route path="teacher">
-            <Route index element={<TeacherHome />} />
-            <Route path="batches" element={<TeacherBatch />} />
-          </Route>
-        </Routes>
+              {/* teacher */}
+              <Route path="teacher">
+                <Route index element={<TeacherHome />} />
+                <Route path="batches" element={<TeacherBatch />} />
+              </Route>
+            </Routes>
+        }
       </BrowserRouter>
     </>
   )
