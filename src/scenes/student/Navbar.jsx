@@ -19,6 +19,7 @@ import { Outlet } from 'react-router-dom';
 import { setLiveClass, setPreviousClass, unSetLiveClass, unSetPreviousClass } from '../../store/studentClass';
 import { useDispatch } from 'react-redux';
 import Logo from '../../assets/Logo.png'
+import { isNotConnected } from '../../store/loginedUserSlice';
 
 
 const drawerWidth = 240;
@@ -78,7 +79,10 @@ function DrawerAppBar(props) {
     {
       title: 'Logout',
       myAction: () => {
-        // navigate('/student/profile')
+        if (localStorage.getItem("user-token")) {
+          localStorage.clear();
+          dispatch(isNotConnected())
+        }
       }
     }
   ]

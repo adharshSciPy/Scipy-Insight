@@ -54,9 +54,10 @@ export default function SignIn() {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         console.log(response);
-        navigate("/student/home");
+        window.location.reload(false);
+        // navigate(`/${role}/home`);
         // setTimeout(() => {
-        //   window.location.reload(false);
+        //   
          
         // }, 1000);
       })
