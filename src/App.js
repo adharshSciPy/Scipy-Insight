@@ -21,12 +21,11 @@ import { Outlet } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import { setLoading } from './store/loader';
-import { useDispatch, useSelector } from 'react-redux';
 import Loader from './scenes/main/Loader';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 
-import { loggeduser, isConnected,isNotConnected } from './store/loginedUserSlice';
+import { loggeduser, isConnected, isNotConnected } from './store/loginedUserSlice';
 
 import ProtectedRoute from './component/ProtectedRoute';
 import ForceRedirect from './component/ForceRedirect';
@@ -43,9 +42,9 @@ function App() {
 
       if (user) {
 
-        const  data = {token : user}
+        const data = { token: user }
         const verifyUser = async () => {
-         
+
           axios
             .post("http://localhost:5000/user/auth", data)
             .then((response) => {
@@ -61,7 +60,7 @@ function App() {
               localStorage.clear();
             });
         }
-        verifyUser();            
+        verifyUser();
       } else {
         // setIsconnected(false);
         dispatch(isNotConnected())
@@ -89,54 +88,50 @@ function App() {
       <BrowserRouter>
         {
           loading ? <Loader /> :
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="login" element={<ForceRedirect user={active}><SignIn /></ForceRedirect>} />
-          <Route path="register" element={<SignUp />} />
-
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="login" element={<SignIn />} />
+              <Route path="login" element={<ForceRedirect user={active}><SignIn /></ForceRedirect>} />
               <Route path="register" element={<SignUp />} />
 
-              {/* admin */}
-              <Route path="admin" element={<Dashboard />}>
-                <Route path='home' element={<Home />} />
-                <Route path='batches' element={<Batches />} >
-                  <Route path=':batchId' element={<Batches />} />
+    
+                {/* admin */}
+                <Route path="admin" element={<Dashboard />}>
+                  <Route path='home' element={<Home />} />
+                  <Route path='batches' element={<Batches />} >
+                    <Route path=':batchId' element={<Batches />} />
+                  </Route>
+
+                  <Route path='students' element={<Students />} >
+                    <Route path=':studentId' element={<Student />} />
+                  </Route>
+
+                  <Route path='teachers' element={<Teachers />} >
+                    <Route path=':teacherId' element={<Teacher />} />
+                  </Route>
                 </Route>
 
-                <Route path='students' element={<Students />} >
-                  <Route path=':studentId' element={<Student />} />
+                {/* student */}
+                <Route path="student" element={<StudentNav />}>
+                  <Route path="home" element={<StudentHome />} />
+                  <Route path="class" element={<StudentClass />} />
+                  <Route path="profile" element={<StudentProfile />} />
+                  <Route path="advancedClass" element={<AdvancedClass />} />
+                </Route>
+                {/* student */}
+                <Route path="student" element={<StudentNav />}>
+                  <Route path="home" element={<ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
+                  <Route path="class" element={<ProtectedRoute user={active}> <StudentClass /></ProtectedRoute>} />
+                  <Route path="profile" element={<ProtectedRoute user={active}> <StudentProfile /></ProtectedRoute>} />
+                  <Route path="advancedClass" element={<ProtectedRoute user={active}> <AdvancedClass /></ProtectedRoute>} />
                 </Route>
 
-                <Route path='teachers' element={<Teachers />} >
-                  <Route path=':teacherId' element={<Teacher />} />
+
+                {/* teacher */}
+                <Route path="teacher">
+                  <Route index element={<TeacherHome />} />
+                  <Route path="batches" element={<TeacherBatch />} />
                 </Route>
-              </Route>
-
-              {/* student */}
-              <Route path="student" element={<StudentNav />}>
-                <Route path="home" element={<StudentHome />} />
-                <Route path="class" element={<StudentClass />} />
-                <Route path="profile" element={<StudentProfile />} />
-                <Route path="advancedClass" element={<AdvancedClass />} />
-              </Route>
-          {/* student */}
-          <Route path="student" element={<StudentNav />}>
-            <Route path="home" element={ <ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
-            <Route path="class" element={<ProtectedRoute user={active}> <StudentClass /></ProtectedRoute>} />
-            <Route path="profile" element={<ProtectedRoute user={active}> <StudentProfile /></ProtectedRoute>} />
-            <Route path="advancedClass" element={<ProtectedRoute user={active}> <AdvancedClass /></ProtectedRoute>} />
-          </Route>
-
-
-              {/* teacher */}
-              <Route path="teacher">
-                <Route index element={<TeacherHome />} />
-                <Route path="batches" element={<TeacherBatch />} />
-              </Route>
-            </Routes>
+              </Routes>
         }
       </BrowserRouter>
     </>
