@@ -63,7 +63,7 @@ module.exports = {
             res.status(404).json(errors);
           } else {
             // generating a token and storing it in a cookie
-            const token = jwt.sign({ _id: user._id }, "sooraj_DOING_GOOD", {
+            const token = jwt.sign({ _id: user._id , role: user.role}, "sooraj_DOING_GOOD", {
               expiresIn: "12h",
             });
             const options = {
@@ -76,7 +76,7 @@ module.exports = {
                id : user._id
             }
 
-            console.log(data);
+            // console.log(data);
             // res.cookie("Authorization", token, options);
             res.status(201).json({
               token,

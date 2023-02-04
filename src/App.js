@@ -25,7 +25,7 @@ import Loader from './scenes/main/Loader';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 
-import { loggeduser, isConnected, isNotConnected } from './store/loginedUserSlice';
+import { loggeduser, isConnected, isNotConnected, loginRole } from './store/loginedUserSlice';
 
 import ProtectedRoute from './component/ProtectedRoute';
 import ForceRedirect from './component/ForceRedirect';
@@ -40,20 +40,17 @@ function App() {
   const checkUserToken = () => {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("user-token"));
-      console.log(user);
-
       if (user) {
-
         const data = { token: user }
         const verifyUser = async () => {
-
           axios
             .post("http://localhost:5000/user/auth", data)
             .then((response) => {
               const X = response.data;
               // Save token to localStorage
-              console.log(X._id);
               dispatch(loggeduser(X._id))
+              dispatch(loginRole(X.role))
+              // console.log(X.role)
               // setIsconnected(true);
               dispatch(isConnected())
             })
@@ -71,7 +68,7 @@ function App() {
   };
   useEffect(() => {
     checkUserToken();
-  }, [isConnected]);
+  }, [active]);
 
   const Logout = () => {
     if (localStorage.getItem("user-token")) {
