@@ -29,6 +29,8 @@ import { loggeduser, isConnected, isNotConnected } from './store/loginedUserSlic
 
 import ProtectedRoute from './component/ProtectedRoute';
 import ForceRedirect from './component/ForceRedirect';
+import Error from './scenes/main/Error'
+import Snackbar from './scenes/main/Snackbar';
 
 function App() {
   // const [isConnected, setIsconnected] = useState(false);
@@ -86,52 +88,48 @@ function App() {
       {/* <LandingPage /> */}
       {/* <Outlet /> */}
       <BrowserRouter>
+        <Snackbar />
         {
           loading ? <Loader /> :
             <Routes>
+              <Route path="*" element={<Error />} />
               <Route path="/" element={<LandingPage />} />
               <Route path="login" element={<ForceRedirect user={active}><SignIn /></ForceRedirect>} />
               <Route path="register" element={<SignUp />} />
 
-    
-                {/* admin */}
-                <Route path="admin" element={<Dashboard />}>
-                  <Route path='home' element={<Home />} />
-                  <Route path='batches' element={<Batches />} >
-                    <Route path=':batchId' element={<Batches />} />
-                  </Route>
 
-                  <Route path='students' element={<Students />} >
-                    <Route path=':studentId' element={<Student />} />
-                  </Route>
-
-                  <Route path='teachers' element={<Teachers />} >
-                    <Route path=':teacherId' element={<Teacher />} />
-                  </Route>
+              {/* admin */}
+              <Route path="admin" element={<Dashboard />}>
+                <Route path='home' element={<Home />} />
+                <Route path='batches' element={<Batches />} >
+                  <Route path=':batchId' element={<Batch />} />
                 </Route>
 
-                {/* student */}
-                <Route path="student" element={<StudentNav />}>
-                  <Route path="home" element={<StudentHome />} />
-                  <Route path="class" element={<StudentClass />} />
-                  <Route path="profile" element={<StudentProfile />} />
-                  <Route path="advancedClass" element={<AdvancedClass />} />
-                </Route>
-                {/* student */}
-                <Route path="student" element={<StudentNav />}>
-                  <Route path="home" element={<ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
-                  <Route path="class" element={<ProtectedRoute user={active}> <StudentClass /></ProtectedRoute>} />
-                  <Route path="profile" element={<ProtectedRoute user={active}> <StudentProfile /></ProtectedRoute>} />
-                  <Route path="advancedClass" element={<ProtectedRoute user={active}> <AdvancedClass /></ProtectedRoute>} />
+                <Route path='students' element={<Students />} >
+                  <Route path=':studentId' element={<Student />} />
                 </Route>
 
-
-                {/* teacher */}
-                <Route path="teacher">
-                  <Route index element={<TeacherHome />} />
-                  <Route path="batches" element={<TeacherBatch />} />
+                <Route path='teachers' element={<Teachers />} >
+                  <Route path=':teacherId' element={<Teacher />} />
                 </Route>
-              </Routes>
+              </Route>
+
+
+              {/* student */}
+              <Route path="student" element={<StudentNav />}>
+                <Route path="home" element={<ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
+                <Route path="class" element={<ProtectedRoute user={active}> <StudentClass /></ProtectedRoute>} />
+                <Route path="profile" element={<ProtectedRoute user={active}> <StudentProfile /></ProtectedRoute>} />
+                <Route path="advancedClass" element={<ProtectedRoute user={active}> <AdvancedClass /></ProtectedRoute>} />
+              </Route>
+
+
+              {/* teacher */}
+              <Route path="teacher">
+                <Route index element={<TeacherHome />} />
+                <Route path="batches" element={<TeacherBatch />} />
+              </Route>
+            </Routes>
         }
       </BrowserRouter>
     </>

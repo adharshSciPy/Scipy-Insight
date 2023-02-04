@@ -32,7 +32,17 @@ export default function SignIn() {
 
   const role = useSelector((state) => state.auth.role)
 
-
+ // toast logout
+ const notify = () => toast.success('Login Succesfully', {
+  position: "bottom-right",
+  autoClose: 2000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+});
 
   // submit function
   const onChangeHandler = (event) => {
@@ -51,12 +61,13 @@ export default function SignIn() {
         const role = response.data.role
         // Save token to localStorage
         localStorage.setItem("user-token", JSON.stringify(token));
-        toast.success(`${response.data.message}`, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+        // toast.success(`${response.data.message}`, {
+        //   position: toast.POSITION.BOTTOM_CENTER,
+        // });
         console.log(response);
         dispatch(setLoading())
         navigate("/student/home");
+        notify()
         setTimeout(() => {
           dispatch(unSetLoading())
 
@@ -118,6 +129,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+
         <Box component="form" onSubmit={onSubmitHandler} noValidate sx={{ mt: 1 }}>
 
 
