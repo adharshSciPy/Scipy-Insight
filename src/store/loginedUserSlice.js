@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   id :'bla',
-  isConnected : false
+  isConnected : false,
+  role : ''
 }
 
 export const LoginedUserSlice = createSlice({
@@ -18,11 +19,15 @@ export const LoginedUserSlice = createSlice({
      },
      isNotConnected : (state) => {
         state.isConnected = false
+     },
+     loginRole :(state,action) => {
+      state.role = action.payload
+      console.log(state.role)
      }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {  loggeduser,isConnected,isNotConnected } = LoginedUserSlice.actions
+export const {  loggeduser,isConnected,isNotConnected,loginRole } = LoginedUserSlice.actions
 
 export default  LoginedUserSlice.reducer

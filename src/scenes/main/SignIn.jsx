@@ -20,6 +20,8 @@ import { MenuItem } from '@mui/material';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setLoading, unSetLoading } from "../../store/loader";
+import { loginRole } from "../../store/loginedUserSlice";
+
 
 export default function SignIn() {
 
@@ -44,6 +46,7 @@ export default function SignIn() {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    dispatch(setLoading())
     axios
       .post("http://localhost:5000/user/signin", form)
       .then((response) => {
@@ -54,21 +57,22 @@ export default function SignIn() {
         toast.success(`${response.data.message}`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
-        console.log(response);
-        dispatch(setLoading())
-        navigate("/student/home");
+        console.log(response);       
+         window.location.reload(false);
+         dispatch(loginRole(role))
         setTimeout(() => {
+          // navigate("/student/home");
+          
           dispatch(unSetLoading())
-
         }, 3000);
-        window.location.reload(false);
-        // navigate(`/${role}/home`);
-        // setTimeout(() => {
-        //   
-         
-        // }, 1000);
+       
+      
       })
       .catch((err) => setErrors(err.response.data));
+      setTimeout(() => {
+        dispatch(unSetLoading())
+
+      }, 3000);
 
   }
 

@@ -25,7 +25,7 @@ import Loader from './scenes/main/Loader';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 
-import { loggeduser, isConnected, isNotConnected } from './store/loginedUserSlice';
+import { loggeduser, isConnected, isNotConnected, loginRole } from './store/loginedUserSlice';
 
 import ProtectedRoute from './component/ProtectedRoute';
 import ForceRedirect from './component/ForceRedirect';
@@ -47,6 +47,8 @@ function App() {
               const X = response.data;
               // Save token to localStorage
               dispatch(loggeduser(X._id))
+              dispatch(loginRole(X.role))
+              // console.log(X.role)
               // setIsconnected(true);
               dispatch(isConnected())
             })
@@ -90,23 +92,23 @@ function App() {
 
     
                 {/* admin */}
-                <Route path="admin" element={<Dashboard />}>
-                  <Route path='home' element={<Home />} />
-                  <Route path='batches' element={<Batches />} >
-                    <Route path=':batchId' element={<Batches />} />
+                <Route path="admin" element={<ProtectedRoute user={active}><Dashboard /></ProtectedRoute>}>
+                  <Route path='home' element={<ProtectedRoute user={active}><Home /></ProtectedRoute>} />
+                  <Route path='batches' element={<ProtectedRoute user={active}><Batches /></ProtectedRoute>} >
+                    <Route path=':batchId' element={<ProtectedRoute user={active}><Batches /></ProtectedRoute>} />
                   </Route>
 
-                  <Route path='students' element={<Students />} >
-                    <Route path=':studentId' element={<Student />} />
+                  <Route path='students' element={<ProtectedRoute user={active}><Students /></ProtectedRoute>} >
+                    <Route path=':studentId' element={<ProtectedRoute user={active}><Student /></ProtectedRoute>} />
                   </Route>
 
-                  <Route path='teachers' element={<Teachers />} >
-                    <Route path=':teacherId' element={<Teacher />} />
+                  <Route path='teachers' element={<ProtectedRoute user={active}><Teachers /></ProtectedRoute>} >
+                    <Route path=':teacherId' element={<ProtectedRoute user={active}><Teacher /></ProtectedRoute>} />
                   </Route>
                 </Route>
                 
                 {/* student */}
-                <Route path="student" element={<StudentNav />}>
+                <Route path="student" element={<ProtectedRoute user={active}><StudentNav /></ProtectedRoute>}>
                   <Route path="home" element={<ProtectedRoute user={active}> <StudentHome /> </ProtectedRoute>} />
                   <Route path="class" element={<ProtectedRoute user={active}> <StudentClass /></ProtectedRoute>} />
                   <Route path="profile" element={<ProtectedRoute user={active}> <StudentProfile /></ProtectedRoute>} />
@@ -116,8 +118,8 @@ function App() {
 
                 {/* teacher */}
                 <Route path="teacher">
-                  <Route index element={<TeacherHome />} />
-                  <Route path="batches" element={<TeacherBatch />} />
+                  <Route index element={<ProtectedRoute user={active}><TeacherHome /></ProtectedRoute>} />
+                  <Route path="batches" element={<ProtectedRoute user={active}><TeacherBatch /></ProtectedRoute>} />
                 </Route>
               </Routes>
         }
